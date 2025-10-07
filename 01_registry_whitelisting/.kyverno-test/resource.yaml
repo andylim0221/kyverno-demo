@@ -1,3 +1,4 @@
+# Bad deployment - uses public image registry
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,6 +21,7 @@ spec:
         name: busybox
         command: ["sleep", "9999"]
 ---
+# Good deployment - uses whitelisted private image registry
 apiVersion: apps/v1
 kind: Deployment
 metadata:
