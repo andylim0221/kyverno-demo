@@ -1,0 +1,33 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-image-registries
+  annotations:
+    policies.kyverno.io/title: Restrict Image Registries
+    policies.kyverno.io/category: Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      Only allow images from ECR private registry to prevent 
+      supply chain attacks and ensure images come from trusted sources.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: validate-registries
+      match:
+        any:
+        - resources:
+            kinds:
+              - Pod
+      validate:
+        message: >-
+          Images must come from private registries only:
+          - 123456789012.dkr.ecr.ap-southeast-1.amazonaws.com
+        pattern:
+          spec:
+            =(ephemeralContainers):
+            - image: "123456789012.dkr.ecr.ap-southeast-1.amazonaws.com/*"
+            =(initContainers):
+            - image: "123456789012.dkr.ecr.ap-southeast-1.amazonaws.com/*"
+            containers:
+            - image: "123456789012.dkr.ecr.ap-southeast-1.amazonaws.com/*"

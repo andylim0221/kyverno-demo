@@ -1,0 +1,21 @@
+apiVersion: cli.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: 01-registry-whitelisting
+policies:
+- ../01_registry_whitelisting.yaml
+resources:
+- resource.yaml
+results:
+- kind: Deployment
+  policy: 01-registry-whitelisting
+  resources:
+  - baddeployment01
+  result: fail
+  rule: validate-registries
+- kind: Deployment
+  policy: 01-registry-whitelisting
+  resources:
+  - gooddeployment01
+  result: pass
+  rule: validate-registries

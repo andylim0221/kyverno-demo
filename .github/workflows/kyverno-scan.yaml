@@ -1,0 +1,31 @@
+name: Kyverno Test
+
+on:
+  push:
+    paths:
+      - 'policies/**'
+      - '.github/workflows/kyverno-scan.yaml'
+  pull_request:
+    paths:
+      - 'policies/**'
+
+jobs:
+  kyverno:
+    runs-on: ubuntu-latest
+
+    permissions: {}
+
+    name: Install Kyverno CLI
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.1.1
+      - name: Install Kyverno CLI
+        uses: kyverno/action-install-cli@v0.2.0
+        with:
+          verify: true
+      - name: Check install
+        run: kyverno version
+      - name: Run scan
+        run: kyverno test .
