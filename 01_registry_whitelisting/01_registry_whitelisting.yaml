@@ -10,7 +10,7 @@ metadata:
       Only allow images from ECR private registry to prevent 
       supply chain attacks and ensure images come from trusted sources.
 spec:
-  validationFailureAction: Enforce
+  validationFailureAction: Audit
   background: true
   rules:
     - name: validate-registries

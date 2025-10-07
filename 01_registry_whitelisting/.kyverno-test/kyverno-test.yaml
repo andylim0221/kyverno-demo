@@ -8,13 +8,13 @@ resources:
 - resource.yaml
 results:
 - kind: Deployment
-  policy: 01-registry-whitelisting
+  policy: restrict-image-registries
   resources:
   - baddeployment01
   result: fail
   rule: validate-registries
 - kind: Deployment
-  policy: 01-registry-whitelisting
+  policy: restrict-image-registries
   resources:
   - gooddeployment01
   result: pass

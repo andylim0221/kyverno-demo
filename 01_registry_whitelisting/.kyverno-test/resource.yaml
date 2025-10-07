@@ -4,6 +4,7 @@ metadata:
   name: baddeployment01
   labels:
     app: busybox
+  namespace: demo-application
 spec:
   replicas: 1
   selector:
@@ -25,7 +26,7 @@ metadata:
   name: gooddeployment01
   labels:
     app: busybox
-  namespace: foo
+  namespace: demo-application
 spec:
   replicas: 1
   selector:
